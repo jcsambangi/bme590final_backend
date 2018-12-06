@@ -86,20 +86,26 @@ def post_dashr_data():
     ]
     :return:
     """
-    all_data = request.get_json()
-    data_dict = json.load(all_data)
-    print(data_dict)
+    print("POSTING")
+    data = request.json
+    print(data)
+    # data_dict = all_data.json
+    # print(data_dict)
     q = "INSERT INTO dashr VALUES"
-    for pin in data_dict:
-        for file in data_dict[pin]:
-            val = "({},{},{}),".format(data_dict[pin], file['data'], file['timestamp'])
+    for pin in data:
+        print(pin)
+        for file in data[pin]:
+            print(file)
+            val = "({},'{}','{}'),".format(pin, file['data'], file['timestamp'])
             q = q + val
     q = q[:-1]
+    print(q)
     try:
         with connection.cursor() as cursor:
             # Create a new record
             cursor.execute(q)
         connection.commit()
+        return "posted"
     except Exception as e:
         return str(e)
 
