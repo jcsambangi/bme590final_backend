@@ -23,57 +23,26 @@ def index():
     return 'Server is up'
 
 
-# @app.route('/test')
-# def add_data():
-#     try:
-#         # with connection.cursor() as cursor:
-#         #     print("connecting")
-#         #     # Create a new record
-#         #     sql = "INSERT INTO dashr VALUES (9037, 'ASDLJGWGAD', '2018-12-02 15:23:19')"
-#         #     cursor.execute(sql)
-#         #
-#         # # connection is not autocommit by default. So you must commit to save
-#         # # your changes.
-#         # connection.commit()
-#
-#         with connection.cursor() as cursor:
-#             print("fetching data")
-#             # Read a single record
-#             sql = "SELECT * FROM dashr"
-#             cursor.execute(sql)
-#             result = cursor.fetchall()
-#             print(result)
-#             return "good?"
-#     except Exception as e:
-#         return str(e)
+@app.route('/api/dashr/find_pins')
+def find_pins():
+    return "pins array"
 
 
-@app.route('/api/dashr/<pin>', methods=['GET'])
-def get_dasher_data(pin):
-    """
-    pin: pin number to get data for
-    OPTIONAL PARAMETERS:
-    start_date: earliest day of range, inclusive
-    end_date: most recent day of range, inclusive
-    :return:
-    """
-    q = "SELECT timestamp, data FROM dashr WHERE pin = {}".format(pin)
-    # print(request.args['start_date'])
-    if 'start_date' in request.args:
-        q = q + " AND timestamp > {}".format(request.args['start_date'])
-    if 'end_date' in request.args:
-        q = q + " AND timestamp < {}".format(request.args['end_date'])
-    print(q)
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(q)
-            result = cursor.fetchall()
-            return jsonify(result)
-    except Exception as e:
-        return str(e)
+@app.route('/api/dashr/upload', methods=['POST'])
+def upload():
+    return "log"
 
 
-@app.route('/api/dashr', methods=['POST'])
+# delete files from usb when done - do this last
+@app.route('/api/dashr/delete_from_drive')
+def delete():
+    return "files deleted"
+
+
+
+
+
+# @app.route('/api/dashr', methods=['POST'])
 def post_dashr_data():
     """
     data in json form:
