@@ -38,6 +38,9 @@ def find_pins():
 
 @app.route('/api/dashr/upload', methods=['POST'])
 def upload():
+    print("UPLOADING")
+    req = request.get_json()
+    print(req)
     return "log"
 
 
