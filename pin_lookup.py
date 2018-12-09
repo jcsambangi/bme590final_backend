@@ -13,8 +13,8 @@ def pin(serial_num):
     try:
         with connection.cursor() as cursor:
             cursor.execute(q)
-            result = cursor.fetchall()
-            return result
+            result = cursor.fetchone()
+            return result["pin"]
     except Exception as e:
         return str(e)
     return "ok"

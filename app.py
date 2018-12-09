@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, abort
 import pymysql
 import config as config
+from flask_cors import CORS
 import json
 import datetime
 from python_http_client import exceptions
 from DASHR import findSNs
 
 app = Flask(__name__)
+CORS(app)
 connection = pymysql.connect(host=config.mysql['host'],
                              user=config.mysql['user'],
                              password=config.mysql['password'],
@@ -26,11 +28,19 @@ def index():
 
 @app.route('/api/dashr/find_pins')
 def find_pins():
-    return "pins array"
+    dict = findSNs()
+    arr = []
+    for SN in dict:
+        arr.append(SN)
+    print({"pins": arr})
+    return jsonify({"pins": arr})
 
 
 @app.route('/api/dashr/upload', methods=['POST'])
 def upload():
+    print("UPLOADING")
+    req = request.get_json()
+    print(req)
     return "log"
 
 
@@ -81,5 +91,5 @@ def post_dashr_data():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run('localhost')
 
