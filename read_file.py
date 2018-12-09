@@ -1,6 +1,7 @@
 import binascii
 import base64
 import time
+from datetime import datetime
 import os
 import pymysql
 import numpy
@@ -15,8 +16,9 @@ connection = pymysql.connect(host=config.mysql['host'],
 
 
 def main():
-    # read_file_data("..\..\..\Downloads\L0.BIN", 9307)
-    read_numpy("..\..\..\Downloads\L0.BIN")
+    # read_file_data("..\..\..\Downloads\L0.BIN", 9037)
+    read_file_data("test.txt", 9307)
+    # read_numpy("..\..\..\Downloads\L0.BIN")
 
 
 def read_file_data(filepath, pin):
@@ -30,37 +32,51 @@ def read_file_data(filepath, pin):
     :return: timestamp of create_time
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
-    ctr = 0
+    create_datetime = datetime.fromtimestamp(time.mktime(create_time))
+    # Open file and read data
     with open(filepath, "rb") as f:
-        # metadata = f.read(512)
-        # b64data = binascii.b2a_base64(f.read())
-        data_binary = f.read()
-        # b64data = binascii.b2a_base64(data)
-    # with open(filepath, "rb") as f:
-    #     byte = f.read(1)
-    #     while byte != "" and ctr < 100:
-    #         # Do stuff with byte.
-    #         byte = f.read(1)
-    #         print(byte, end='', flush=True)
-    #         ctr = ctr + 1
+        data_raw = f.read()
+    # Encode to base64
+    b64data = base64.b64encode(data_raw)
+    # Save to DB
+    try:
+        with connection.cursor() as cursor:
+            print("CONNECTED TO DB")
+            cursor.execute("SELECT MAX(timestamp) FROM dashr WHERE pin = {}"
+                           .format(pin))
+            max_time = cursor.fetchone()["MAX(timestamp)"]
+            if max_time is None:
+                max_time = datetime.min
+    except Exception as e:
+        return str(e)
+    try:
+        with connection.cursor() as cursor:
+            if create_datetime > max_time:
+                # ASSUMING clocks don't reset and/or go backwards
+                print("time is greater - save data to db")
+                cursor.execute("INSERT INTO dashr VALUES ({}, '{}', '{}')".
+                               format(pin, b64data.decode("utf-8"),
+                                      create_datetime))
+            else:
+                # data had previously been inserted into DB
+                print("time is less - don't save: " + create_datetime)
+                return ""
+            # Commit changes (insert) to DB
+            connection.commit()
+            return time.strftime("%Y-%m-%d %H:%M:%S",
+                                 create_time)
+    except Exception as e:
+        print(str(e))
+        return str(e)
 
-    b64data = base64.b64encode(data_binary)
-    # print(time.strftime("%a, %d %b %Y %H:%M:%S +0000", create_time))
-    print("B64: ")
-    print(b64data)
-    decoded = base64.decodebytes(b64data)
-    print(decoded)
-    print(len(decoded))
-    print("".join(["{:08b}".format(x) for x in decoded]))
 
-    # TODO: save to db
-
-    return create_time
-
-
-def read_numpy(path):
-    print(numpy.fromfile(path, dtype="uint8"))
-    return ""
+# def read_numpy(path):
+#     data_arr = numpy.fromfile(path, dtype="uint8")
+#     # print(data_arr[100])
+#     for i in range(0, 700):
+#         print(data_arr[i], end=" ")
+#     print(len(data_arr))
+#     return ""
 
 
     # q = "SELECT timestamp, data FROM dashr WHERE pin = {}".format(pin)
@@ -78,6 +94,12 @@ def read_numpy(path):
     # except Exception as e:
     #     return str(e)
 
+# DECODING:
+    # decoded = base64.b64decode(b64data)
+    # decoded = base64.decodebytes(decoded64)
+    # print(decoded)
+    # print(len(decoded))
+    # print("".join(["{:08b}".format(x) for x in decoded]))
 
 if __name__ == '__main__':
     main()

@@ -3,3 +3,5 @@ pymysql
 pathlib
 psutil
 numpy
+flask-cors
+
