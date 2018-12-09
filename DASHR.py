@@ -3,6 +3,7 @@ import os
 import pathlib
 import psutil
 import numpy
+from pin_lookup import pin
 
 
 def findSNs():
@@ -19,7 +20,9 @@ def findSNs():
     for possibleDASHR in maybeDASHRpartitions:
         hold = determineDASHRs(possibleDASHR)
         if hold is not False:
-            DASHRlut[hold] = possibleDASHR
+            pin_num = pin(hold)
+            DASHRlut[pin_num] = possibleDASHR
+    print(DASHRlut)
     return DASHRlut
 
 
@@ -42,4 +45,5 @@ def readSN(path):
     :param path: string path of particular L0.BIN file
     :returns SN: integer serial number
     """
-    return numpy.fromfile(path, dtype="uint32")[104]    
+    return numpy.fromfile(path, dtype="uint32")[104]
+

@@ -3,7 +3,9 @@ import base64
 import time
 import os
 import pymysql
+import numpy
 import config as config
+
 
 connection = pymysql.connect(host=config.mysql['host'],
                              user=config.mysql['user'],
@@ -12,9 +14,14 @@ connection = pymysql.connect(host=config.mysql['host'],
                              cursorclass=pymysql.cursors.DictCursor)
 
 
-def read_file_data(filepath):
+def main():
+    # read_file_data("..\..\..\Downloads\L0.BIN", 9307)
+    read_numpy("..\..\..\Downloads\L0.BIN")
+
+
+def read_file_data(filepath, pin):
     """
-    Takes file
+    Takes file and pin
     Reads timestamp from metadata and data within
     encodes data to base64
     stores data to DB
@@ -23,23 +30,37 @@ def read_file_data(filepath):
     :return: JSON object - dictionary of pins to {array of times, number of times}
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
-    with open(filepath, "r") as f:
+    ctr = 0
+    with open(filepath, "rb") as f:
         # metadata = f.read(512)
         # b64data = binascii.b2a_base64(f.read())
         data_binary = f.read()
         # b64data = binascii.b2a_base64(data)
+    # with open(filepath, "rb") as f:
+    #     byte = f.read(1)
+    #     while byte != "" and ctr < 100:
+    #         # Do stuff with byte.
+    #         byte = f.read(1)
+    #         print(byte, end='', flush=True)
+    #         ctr = ctr + 1
 
     b64data = base64.b64encode(data_binary)
-    print(time.strftime("%a, %d %b %Y %H:%M:%S +0000", create_time))
-    # print(data)
+    # print(time.strftime("%a, %d %b %Y %H:%M:%S +0000", create_time))
+    print("B64: ")
     print(b64data)
-    print(b64data.decode('ascii'))
-
-    # TODO: find pin
+    decoded = base64.decodebytes(b64data)
+    print(decoded)
+    print(len(decoded))
+    print("".join(["{:08b}".format(x) for x in decoded]))
 
     # TODO: save to db
 
     return data_binary
+
+
+def read_numpy(path):
+    print(numpy.fromfile(path, dtype="uint8"))
+    return ""
 
 
     # q = "SELECT timestamp, data FROM dashr WHERE pin = {}".format(pin)
@@ -56,3 +77,7 @@ def read_file_data(filepath):
     #         return jsonify(result)
     # except Exception as e:
     #     return str(e)
+
+
+if __name__ == '__main__':
+    main()
