@@ -27,7 +27,7 @@ def read_file_data(filepath, pin):
     stores data to DB
     returns timestamp
     :param: file from os
-    :return: JSON object - dictionary of pins to {array of times, number of times}
+    :return: timestamp of create_time
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
     ctr = 0
@@ -55,7 +55,7 @@ def read_file_data(filepath, pin):
 
     # TODO: save to db
 
-    return data_binary
+    return create_time
 
 
 def read_numpy(path):
