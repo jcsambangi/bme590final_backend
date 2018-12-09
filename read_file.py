@@ -1,4 +1,5 @@
 import binascii
+import base64
 import time
 import os
 import pymysql
@@ -22,13 +23,23 @@ def read_file_data(filepath):
     :return: JSON object - dictionary of pins to {array of times, number of times}
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
-    with open(filepath, "rb") as f:
+    with open(filepath, "r") as f:
         # metadata = f.read(512)
-        b64data = binascii.b2a_base64(f.read())
+        # b64data = binascii.b2a_base64(f.read())
+        data_binary = f.read()
+        # b64data = binascii.b2a_base64(data)
 
+    b64data = base64.b64encode(data_binary)
     print(time.strftime("%a, %d %b %Y %H:%M:%S +0000", create_time))
+    # print(data)
     print(b64data)
-    return create_time, b64data
+    print(b64data.decode('ascii'))
+
+    # TODO: find pin
+
+    # TODO: save to db
+
+    return data_binary
 
 
     # q = "SELECT timestamp, data FROM dashr WHERE pin = {}".format(pin)
