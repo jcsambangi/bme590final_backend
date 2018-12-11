@@ -3,5 +3,5 @@ pymysql
 pathlib
 psutil
 numpy
+pytest
 flask-cors
-

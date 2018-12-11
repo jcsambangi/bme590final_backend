@@ -38,10 +38,12 @@ def find_pins():
 
 @app.route('/api/dashr/upload', methods=['POST'])
 def upload():
-    print("UPLOADING")
-    req = request.get_json()
-    print(req)
-    return "log"
+    DASHRlut = findSNs()
+    checked = request.get_json()
+    from read_file import read_selected, narrow
+    chosen = narrow(checked, DASHRlut)
+    log = read_selected(chosen)
+    return log
 
 
 # delete files from usb when done - do this last
