@@ -6,6 +6,7 @@ import os
 import pymysql
 import os
 import numpy
+import pathlib
 import config as config
 from datetime import datetime
 
@@ -48,18 +49,31 @@ def read_selected(chosen):
     log["logpins"] = []
     log["numfiles"] = []
     log["notes"] = []
+    print(chosen)
     for pin in chosen:
-        log["logpins"] = log["logpins"].append(pin)
-        ret = read_DASHR(pin, chosen.pin, now)
+        print(pin)
+        print(chosen[pin])
+        curr_logpins = log["logpins"]
+        curr_logpins.append(pin)
+        log["logpins"] = curr_logpins
+        ret = read_DASHR(pin, chosen[pin], now)
         count = 0
         currNotes = []
+        print("________________________")
         for thing in ret:
+            print(thing)
             if thing == 1:
                 count += 1
             elif type(thing) == str:
                 currNotes.append(thing)
-        logForThisPin["notes"] = log["notes"].append(currNotes)
-        logForThisPin["numfiles"] = log["numfiles"].append(count)
+            print(count)
+        curr_lognotes = log["notes"]
+        curr_lognotes.append(currNotes)
+        log["notes"] = curr_lognotes
+        curr_numFiles = log["numfiles"]
+        curr_numFiles.append(count)
+        log["numfiles"] = curr_numFiles
+    print(log)
     return log
 
 
@@ -71,12 +85,19 @@ def read_DASHR(pin, location, now):
     :returns: array of timestamps of files read
     """
     ret = []
+    print("IN READ_DASHR")
     for path, subdirs, files in os.walk(location):
+        print(path)
         for name in files:
-            if name[-3:] == ".BIN":
-                filepath = pathlib.PurePath(path,name).as_posix()
+            print(name)
+            print(name[-3:])
+            if name[-3:] == "BIN":
+                print("3")
+                filepath = pathlib.PurePath(path, name).as_posix()
+                print(filepath)
                 ret.append(read_file_data(filepath, pin, now))
-    return stamps
+    print(ret)
+    return ret
 
 
 def read_file_data(filepath, pin, time_session):
