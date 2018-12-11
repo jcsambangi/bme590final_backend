@@ -31,11 +31,11 @@ def narrow(checked, DASHRlut):
     :param DASHRlut: dictionary mapping of all locally detected DASHRs
     :returns: dictionary mapping only user-selected DASHRs
     """
-    forHarvest = {}
+    for_harvest = {}
     for pin in checked:
         if pin in DASHRlut:
-            forHarvest[pin] = DASHRlut[pin]
-    return forHarvest
+            for_harvest[pin] = DASHRlut[pin]
+    return for_harvest
 
 
 def read_selected(chosen):
@@ -51,28 +51,23 @@ def read_selected(chosen):
     log["notes"] = []
     print(chosen)
     for pin in chosen:
-        print(pin)
-        print(chosen[pin])
         curr_logpins = log["logpins"]
         curr_logpins.append(pin)
         log["logpins"] = curr_logpins
         ret = read_DASHR(pin, chosen[pin], now)
         count = 0
         currNotes = []
-        print("________________________")
         for thing in ret:
-            print(thing)
             if thing == 1:
                 count += 1
             elif type(thing) == str:
                 currNotes.append(thing)
-            print(count)
         curr_lognotes = log["notes"]
         curr_lognotes.append(currNotes)
         log["notes"] = curr_lognotes
-        curr_numFiles = log["numfiles"]
-        curr_numFiles.append(count)
-        log["numfiles"] = curr_numFiles
+        curr_num_files = log["numfiles"]
+        curr_num_files.append(count)
+        log["numfiles"] = curr_num_files
     print(log)
     return log
 
@@ -89,7 +84,6 @@ def read_DASHR(pin, location, now):
         for name in files:
             if name[-3:] == "BIN":
                 filepath = pathlib.PurePath(path, name).as_posix()
-                print(filepath)
                 ret.append(read_file_data(filepath, pin, now))
     print(ret)
     return ret
@@ -102,8 +96,10 @@ def read_file_data(filepath, pin, time_session):
     encodes data to base64
     stores data to DB
     returns timestamp
-    :param: file from os
-    :return: timestamp of create_time
+    :param filepath: from os
+    :param pin: number corresponding to file
+    :param time_session: datetime of the session - ie when it files are harvested
+    :return: 1 if saved, 0 if not, str(error) if error
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
     create_datetime = datetime.fromtimestamp(time.mktime(create_time))
@@ -116,7 +112,8 @@ def read_file_data(filepath, pin, time_session):
     try:
         with connection.cursor() as cursor:
             print("CONNECTED TO DB")
-            cursor.execute("SELECT MAX(dashr_create_time) FROM dashr WHERE pin = {}"
+            cursor.execute("SELECT MAX(dashr_create_time) FROM "
+                           "dashr WHERE pin = {}"
                            .format(pin))
             max_time = cursor.fetchone()["MAX(dashr_create_time)"]
             print(max_time)
@@ -155,21 +152,6 @@ def read_file_data(filepath, pin, time_session):
 #     print(len(data_arr))
 #     return ""
 
-
-    # q = "SELECT timestamp, data FROM dashr WHERE pin = {}".format(pin)
-    # # print(request.args['start_date'])
-    # if 'start_date' in request.args:
-    #     q = q + " AND timestamp > {}".format(request.args['start_date'])
-    # if 'end_date' in request.args:
-    #     q = q + " AND timestamp < {}".format(request.args['end_date'])
-    # print(q)
-    # try:
-    #     with connection.cursor() as cursor:
-    #         cursor.execute(q)
-    #         result = cursor.fetchall()
-    #         return jsonify(result)
-    # except Exception as e:
-    #     return str(e)
 
 # DECODING:
     # decoded = base64.b64decode(b64data)
