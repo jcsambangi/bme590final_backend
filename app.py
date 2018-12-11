@@ -26,7 +26,7 @@ def index():
     return 'Server is up'
 
 
-@app.route('/api/dashr/find_pins')
+@app.route('/api/dashr/find_pins', methods=['GET'])
 def find_pins():
     dict = findSNs()
     arr = []
@@ -38,19 +38,18 @@ def find_pins():
 
 @app.route('/api/dashr/upload', methods=['POST'])
 def upload():
-    print("UPLOADING")
-    req = request.get_json()
-    print(req)
-    return "log"
+    DASHRlut = findSNs()
+    checked = request.get_json()
+    from read_file import read_selected, narrow
+    chosen = narrow(checked, DASHRlut)
+    log = read_selected(chosen)
+    return jsonify(log)
 
 
 # delete files from usb when done - do this last
 @app.route('/api/dashr/delete_from_drive')
 def delete():
     return "files deleted"
-
-
-
 
 
 # @app.route('/api/dashr', methods=['POST'])
