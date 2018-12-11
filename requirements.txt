@@ -3,3 +3,4 @@ pymysql
 pathlib
 psutil
 numpy
+pytest
