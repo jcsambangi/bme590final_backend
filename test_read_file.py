@@ -1,8 +1,9 @@
 import pytest
 from read_file import narrow, read_selected, read_DASHR, read_file_data
 import datetime
+import time
 
-DASHRlut = {9307: "E://", 435:"F://", 0000:"H://"}
+DASHRlut = {9307: "E://", 435: "F://", 0000: "H://"}
 
 
 @pytest.fixture
@@ -52,7 +53,7 @@ def mktestfile(fakeFdir):
 
 
 def test_narrow():
-    assert narrow([9307, 435], DASHRlut) = {9307: "E://", 435:"F://"}
+    assert narrow([9307, 435], DASHRlut) == {9307: "E://", 435: "F://"}
 
 
 def test_read_selected():
@@ -60,13 +61,16 @@ def test_read_selected():
 
 
 def test_read_file():
-    with open("./test.txt", "w") as f:
-        f.write("HELLO WORLD")
-    assert read_file_data("./test.txt", 9307,
+    f = open("./test.txt", "w")
+    f.write("HELLO WORLD")
+    f.close()
+    assert read_file_data("./test.txt", 1000,
                           datetime.datetime.now()) == 1
-    assert read_file_data("./test.txt", 9307,
+    assert read_file_data("./test.txt", 1000,
                           datetime.datetime.now()) == 0
-    with open("./test.txt", "w") as f:
-        f.write("HI HUMANS")
-        assert read_file_data("./test.txt", 9307,
-                              datetime.datetime.now()) == 1
+    time.sleep(1)
+    f = open("./test.txt", "w")
+    f.write("HI HUMANS")
+    f.close()
+    assert read_file_data("./test.txt", 1000,
+                          datetime.datetime.now()) == 1
