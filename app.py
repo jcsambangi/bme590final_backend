@@ -50,9 +50,6 @@ def delete():
     return "files deleted"
 
 
-
-
-
 # @app.route('/api/dashr', methods=['POST'])
 def post_dashr_data():
     """

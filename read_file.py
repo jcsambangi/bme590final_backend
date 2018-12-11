@@ -21,7 +21,7 @@ def main():
     # read_numpy("..\..\..\Downloads\L0.BIN")
 
 
-def read_file_data(filepath, pin):
+def read_file_data(filepath, pin, time_session):
     """
     Takes file and pin
     Reads timestamp from metadata and data within
@@ -54,17 +54,16 @@ def read_file_data(filepath, pin):
             if create_datetime > max_time:
                 # ASSUMING clocks don't reset and/or go backwards
                 print("time is greater - save data to db")
-                cursor.execute("INSERT INTO dashr VALUES ({}, '{}', '{}')".
+                cursor.execute("INSERT INTO dashr VALUES ({}, '{}', '{}', '{}')".
                                format(pin, b64data.decode("utf-8"),
-                                      create_datetime))
+                                      create_datetime, time_session))
             else:
                 # data had previously been inserted into DB
                 print("time is less - don't save: " + create_datetime)
-                return ""
+                return 0
             # Commit changes (insert) to DB
             connection.commit()
-            return time.strftime("%Y-%m-%d %H:%M:%S",
-                                 create_time)
+            return 1
     except Exception as e:
         print(str(e))
         return str(e)
