@@ -16,5 +16,5 @@ def pin(serial_num):
             result = cursor.fetchone()
             return result["pin"]
     except Exception as e:
-        return str(e)
+        raise FileNotFoundError
     return "ok"
