@@ -17,7 +17,7 @@ connection = pymysql.connect(host=config.mysql['host'],
 
 def main():
     # read_file_data("..\..\..\Downloads\L0.BIN", 9037)
-    read_file_data("test.txt", 9307)
+    read_file_data("test.txt", 9307, datetime.now())
     # read_numpy("..\..\..\Downloads\L0.BIN")
 
 
@@ -42,11 +42,13 @@ def read_file_data(filepath, pin, time_session):
     try:
         with connection.cursor() as cursor:
             print("CONNECTED TO DB")
-            cursor.execute("SELECT MAX(timestamp) FROM dashr WHERE pin = {}"
+            cursor.execute("SELECT MAX(dashr_create_time) FROM dashr WHERE pin = {}"
                            .format(pin))
-            max_time = cursor.fetchone()["MAX(timestamp)"]
+            max_time = cursor.fetchone()["MAX(dashr_create_time)"]
+            print(max_time)
             if max_time is None:
                 max_time = datetime.min
+            print(max_time)
     except Exception as e:
         return str(e)
     try:
@@ -59,7 +61,8 @@ def read_file_data(filepath, pin, time_session):
                                       create_datetime, time_session))
             else:
                 # data had previously been inserted into DB
-                print("time is less - don't save: " + create_datetime)
+                print("time is less - don't save: " + datetime.strftime(
+                    create_datetime, "%Y-%m-%d %H:%M:%S"))
                 return 0
             # Commit changes (insert) to DB
             connection.commit()
