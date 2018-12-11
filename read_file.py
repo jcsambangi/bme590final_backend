@@ -85,14 +85,9 @@ def read_DASHR(pin, location, now):
     :returns: array of timestamps of files read
     """
     ret = []
-    print("IN READ_DASHR")
     for path, subdirs, files in os.walk(location):
-        print(path)
         for name in files:
-            print(name)
-            print(name[-3:])
             if name[-3:] == "BIN":
-                print("3")
                 filepath = pathlib.PurePath(path, name).as_posix()
                 print(filepath)
                 ret.append(read_file_data(filepath, pin, now))
@@ -129,6 +124,7 @@ def read_file_data(filepath, pin, time_session):
                 max_time = datetime.min
             print(max_time)
     except Exception as e:
+        print(str(e))
         return str(e)
     try:
         with connection.cursor() as cursor:
