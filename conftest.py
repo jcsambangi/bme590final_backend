@@ -15,9 +15,9 @@ def mkfakeEdir(tmpdir_factory):
 def mktestEfile(mkfakeEdir):
     """Creates test file for unit testing in fakeEdir.
     """
-    testFile = mkfakeEdir.join('9307L0.BIN')
+    testFile = mkfakeEdir.join('L9307L0.BIN')
     test9307Path = testFile.strpath
-    with open('L9307L0.BIN', 'rb') as binaryFile:
+    with open('9307L0.BIN', 'rb') as binaryFile:
         hold = binaryFile.read()
     with open(test9307Path, 'wb') as binaryFile:
         binaryFile.write(hold)
@@ -38,9 +38,9 @@ def mkfakeFdir(tmpdir_factory):
 def mktestFfile(mkfakeFdir):
     """Creates test file for unit testing in fakeHdir.
     """
-    testFile = mkfakeFdir.join('435L0.BIN')
+    testFile = mkfakeFdir.join('L435L0.BIN')
     test435Path = testFile.strpath
-    with open('L435L0.BIN', 'rb') as binaryFile:
+    with open('435L0.BIN', 'rb') as binaryFile:
         hold = binaryFile.read()
     with open(test435Path, 'wb') as binaryFile:
         binaryFile.write(hold)
