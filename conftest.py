@@ -17,7 +17,7 @@ def mktestEfile(mkfakeEdir):
     """
     testFile = mkfakeEdir.join('9307L0.BIN')
     test9307Path = testFile.strpath
-    with open('9307L0.BIN', 'rb') as binaryFile:
+    with open('L9307L0.BIN', 'rb') as binaryFile:
         hold = binaryFile.read()
     with open(test9307Path, 'wb') as binaryFile:
         binaryFile.write(hold)
@@ -40,7 +40,7 @@ def mktestFfile(mkfakeFdir):
     """
     testFile = mkfakeFdir.join('435L0.BIN')
     test435Path = testFile.strpath
-    with open('435L0.BIN', 'rb') as binaryFile:
+    with open('L435L0.BIN', 'rb') as binaryFile:
         hold = binaryFile.read()
     with open(test435Path, 'wb') as binaryFile:
         binaryFile.write(hold)
