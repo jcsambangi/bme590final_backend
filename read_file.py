@@ -102,7 +102,6 @@ def read_file_data(filepath, pin, time_session):
     # Save to DB
     try:
         with connection.cursor() as cursor:
-#            print("CONNECTED TO DB")
             cursor.execute("SELECT MAX(dashr_create_time) FROM "
                            "dashr WHERE pin = {}"
                            .format(pin))

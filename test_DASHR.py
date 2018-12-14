@@ -6,6 +6,7 @@ def test_findSNs(mkfakeEdir, mkfakeFdir):
     LUT = {9307: mkfakeEdir, 435: mkfakeFdir}
     assert findSNs([mkfakeEdir, mkfakeFdir]) == LUT
 
+
 def test_determineDASHRs(mkfakeEdir):
     assert determineDASHRs(mkfakeEdir) == 261791206
 
