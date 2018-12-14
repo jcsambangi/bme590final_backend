@@ -1,5 +1,8 @@
 import pymysql
-import config as config
+try:
+    import config as config
+except:
+    import fakeConfig as config
 
 connection = pymysql.connect(host=config.mysql['host'],
                              user=config.mysql['user'],
