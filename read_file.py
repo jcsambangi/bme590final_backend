@@ -132,8 +132,8 @@ def read_file_data(filepath, pin, time_session):
                 # ASSUMING clocks don't reset and/or go backwards
                 print("time is greater - save data to db")
                 cursor.execute("INSERT INTO dashr VALUES ({},'{}','{}','{}')".
-                              format(pin, b64data.decode("utf-8"),
-                                    create_datetime, time_session))
+                               format(pin, b64data.decode("utf-8"),
+                                      create_datetime, time_session))
             else:
                 # data had previously been inserted into DB
                 print("don't save")
