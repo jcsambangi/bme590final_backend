@@ -1,7 +1,5 @@
-# Create DB
 CREATE DATABASE IF NOT EXISTS `dashr_collection` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `dashr_collection`;
-# Create Table
 CREATE TABLE IF NOT EXISTS `dashr` (
   `pin` int(11) NOT NULL,
   `data` longtext,
