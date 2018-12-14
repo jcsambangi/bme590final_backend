@@ -47,7 +47,7 @@ def determineDASHRs(maybeDASHRpartition):
     for path, subdirs, files in os.walk(maybeDASHRpartition):
         for name in files:
             if name[0] == "L" and name[-3:] == "BIN":
-                return readSN(pathlib.PurePath(path,name).as_posix())
+                return readSN(pathlib.PurePath(path, name).as_posix())
     return False
 
 

@@ -24,7 +24,7 @@ def main():
     # read_file_data("..\..\..\Downloads\L0.BIN", 9037)
     read_file_data("test.txt", 9307, datetime.now())
     # read_numpy("..\..\..\Downloads\L0.BIN")
-    
+
 
 def narrow(checked, DASHRlut):
     """Returns dictionary mapping selected DASHRs to local drives.
@@ -100,7 +100,7 @@ def read_file_data(filepath, pin, time_session):
     returns timestamp
     :param filepath: from os
     :param pin: number corresponding to file
-    :param time_session: datetime of the session - ie when it files are harvested
+    :param time_session: datetime of the session - ie when files are harvested
     :return: 1 if saved, 0 if not, str(error) if error
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
@@ -131,9 +131,9 @@ def read_file_data(filepath, pin, time_session):
             if create_datetime > max_time:
                 # ASSUMING clocks don't reset and/or go backwards
                 print("time is greater - save data to db")
-                cursor.execute("INSERT INTO dashr VALUES ({}, '{}', '{}', '{}')".
-                               format(pin, b64data.decode("utf-8"),
-                                      create_datetime, time_session))
+                cursor.execute("INSERT INTO dashr VALUES ({},'{}','{}','{}')".
+                                format(pin, b64data.decode("utf-8"),
+                                       create_datetime, time_session))
             else:
                 # data had previously been inserted into DB
                 print("don't save")

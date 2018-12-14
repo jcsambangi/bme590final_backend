@@ -7,7 +7,7 @@ DASHRlut = {9307: "E://", 435: "F://", 0000: "H://"}
 
 
 def test_narrow():
-    assert narrow([9307, 435], DASHRlut) == {9307: "E://", 435:"F://"}
+    assert narrow([9307, 435], DASHRlut) == {9307: "E://", 435: "F://"}
 
 
 def test_read_selected(mkfakeFdir):
