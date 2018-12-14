@@ -10,7 +10,7 @@ import pathlib
 try:
     import config as config
 except:
-    import testConfig as config
+    import fakeConfig as config
 
 
 connection = pymysql.connect(host=config.mysql['host'],
