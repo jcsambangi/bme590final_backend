@@ -1,4 +1,5 @@
 # bme590final_backend
+[![Build Status](https://travis-ci.org/jcsambangi/bme590final_backend.svg?branch=master)](https://travis-ci.org/jcsambangi/bme590final_backend)
 Back end functionality for the HIE sensor management tool.
 ## Setting up the Database
 * create a config.py file (this is in the gitignore and will not be added to git)
