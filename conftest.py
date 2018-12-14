@@ -54,7 +54,7 @@ def testFile1(mktestdir):
 
 @pytest.fixture
 def testFile2(mktestdir):
-     """Creates empty text file 2/2 for testing.
+    """Creates empty text file 2/2 for testing.
 
     :param mktestdir: directory fixture
     :returns: path of text file for file reading test

@@ -32,8 +32,120 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="conftest-module">
-<h1>conftest module<a class="headerlink" href="#conftest-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-conftest">
+<span id="conftest-module"></span><h1>conftest module<a class="headerlink" href="#module-conftest" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="conftest.mkfakeEdir">
+<code class="descclassname">conftest.</code><code class="descname">mkfakeEdir</code><span class="sig-paren">(</span><em>mktestEfile</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.mkfakeEdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 1/2 temporary directories for DASHR emulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mktestEfile</strong> – fixture of path from created file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of parent directory E (9307)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conftest.mkfakeFdir">
+<code class="descclassname">conftest.</code><code class="descname">mkfakeFdir</code><span class="sig-paren">(</span><em>mktestFfile</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.mkfakeFdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 2/2 temporary directories for DASHR emulation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mktestFfile</strong> – fixture of path from created file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of parent directory F (435)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conftest.mktestEfile">
+<code class="descclassname">conftest.</code><code class="descname">mktestEfile</code><span class="sig-paren">(</span><em>tmpdir_factory</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.mktestEfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates test file for unit testing in tempEdir.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tmpdir_factory</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of file for pin 9307 test</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conftest.mktestFfile">
+<code class="descclassname">conftest.</code><code class="descname">mktestFfile</code><span class="sig-paren">(</span><em>tmpdir_factory</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.mktestFfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates test file for unit testing in tempFdir.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tmpdir_factory</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of file for pin 435 test</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conftest.mktestdir">
+<code class="descclassname">conftest.</code><code class="descname">mktestdir</code><span class="sig-paren">(</span><em>tmpdir_factory</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.mktestdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates temporary directory for text files during testing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tmpdir_factory</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">directory fixture</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conftest.testFile1">
+<code class="descclassname">conftest.</code><code class="descname">testFile1</code><span class="sig-paren">(</span><em>mktestdir</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.testFile1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates empty text file 1/2 for testing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mktestdir</strong> – directory fixture</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of text file for file reading test</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="conftest.testFile2">
+<code class="descclassname">conftest.</code><code class="descname">testFile2</code><span class="sig-paren">(</span><em>mktestdir</em><span class="sig-paren">)</span><a class="headerlink" href="#conftest.testFile2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates empty text file 2/2 for testing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mktestdir</strong> – directory fixture</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of text file for file reading test</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
