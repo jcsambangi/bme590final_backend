@@ -1,15 +1,4 @@
 import pytest
-import logging
-
-
-#@pytest.fixture
-#def mkfakeEdir(tmpdir_factory):
-#    """Creates 1/2 temporary directories for unit testing-required files.
-#    :param tmpdir_factory:
-#    :returns: tmpdir object
-#    """
-#    fakeEdir = tmpdir_factory.mktemp('fakeE')
-#    return fakeEdir
 
 
 @pytest.fixture
@@ -36,14 +25,24 @@ def mkfakeEdir(mktestEfile):
     return tempEPath
 
 
-#@pytest.fixture
-#def mkfakeFdir(tmpdir_factory):
-#    """Creates 2/2 temporary directories for unit testing-required files.
-#    :param tmpdir_factory:
-#    :returns: tmpdir object
-#    """
-#    fakeFdir = tmpdir_factory.mktemp('fakeF')
-#    return fakeFdir
+@pytest.fixture
+def mktestdir(tmpdir_factory):
+    testdir = tmpdir_factory.mktemp('testing')
+    return testdir
+
+
+@pytest.fixture
+def testFile1(mktestdir):
+    testFile = mktestdir.join('testFile1.txt')
+    testFile1Path = testFile.strpath
+    return testFile1Path
+
+
+@pytest.fixture
+def testFile2(mktestdir):
+    testFile = mktestdir.join('testFile2.txt')
+    testFile2Path = testFile.strpath
+    return testFile2Path
 
 
 @pytest.fixture

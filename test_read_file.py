@@ -25,16 +25,16 @@ def test_read_DASHR(mkfakeEdir):
     assert ret == read_DASHR(9307, mkfakeEdir, now)
 
 
-def test_read_file():
+def test_read_file(testFile1, testFile2):
     time.sleep(1)
-    with open("./testing/test.txt", "w") as f:
+    with open(testFile1, "w") as f:
         f.write("HELLO WORLD")
-    assert read_file_data("./testing/test.txt", 9307,
+    assert read_file_data(testFile1, 9307,
                           datetime.datetime.now()) == 1
-    assert read_file_data("./testing/test.txt", 9307,
+    assert read_file_data(testFile1, 9307,
                           datetime.datetime.now()) == 0
     time.sleep(1)
-    with open("./testing/test2.txt", "w") as f:
+    with open(testFile2, "w") as f:
         f.write("HI HUMANS")
-        assert read_file_data("./testing/test2.txt", 9307,
+        assert read_file_data(testFile2, 9307,
                               datetime.datetime.now()) == 1
