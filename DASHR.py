@@ -33,7 +33,7 @@ def findSNs():
                 pin_num = pin(hold)
                 DASHRlut[pin_num] = possibleDASHR
             except FileNotFoundError:
-                DASHRlut[pin_num] = possibleDASHR
+                DASHRlut[int(hold)] = possibleDASHR
     print(DASHRlut)
     return DASHRlut
 

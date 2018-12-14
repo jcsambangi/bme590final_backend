@@ -17,4 +17,4 @@ def pin(serial_num):
             return result["pin"]
     except Exception as e:
         raise FileNotFoundError
-    return "ok"
+#    return "ok"
