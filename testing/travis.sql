@@ -14,4 +14,4 @@ ALTER TABLE `dashr`
   ADD PRIMARY KEY (`pin`);
 ALTER TABLE `serial_pin`
   ADD PRIMARY KEY (`serial`);
-INSERT INTO TABLE `serial_pin` VALUES (261122326, 435), (261791206, 9307);
+INSERT INTO `dashr_collection`.`serial_pin` (`serial`, `pin`) VALUES (261122326, 435), (261791206, 9307);
