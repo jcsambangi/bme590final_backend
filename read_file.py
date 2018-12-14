@@ -84,9 +84,8 @@ def read_DASHR(pin, location, now):
 
 
 def read_file_data(filepath, pin, time_session):
-    """Reads file and stores data in database based on creation date.
-    Encodes data to base64 before storing. Returns 0, 1, or a note.
-    
+    """Reads file and stores base64 data in database based on creation date.
+
     :param filepath: path on local machine where file can be found
     :param pin: DASHR from which data is being read
     :param time_session: datetime of the session - ie when files are harvested
