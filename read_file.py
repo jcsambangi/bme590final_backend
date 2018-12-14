@@ -82,6 +82,49 @@ def read_DASHR(pin, location, now):
                 ret.append(read_file_data(filepath, pin, now))
     return ret
 
+def downloadDates(pinDates, DASHRlut):
+    """Downloads all data for selected dates for one pin.
+
+    :param pinDates: dictionary with key as pin and value being arry of dates
+    :returns: log as dictionary
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+    log = {}
+    log["logpins"] = []
+    log["numfiles"] = []
+    log["notes"] = []
+    newPinDates = {}
+    for oldpin in pinDates:
+        newPinDates[int(oldpin)] = pinDates[oldpin]
+    for pin in newPinDates:
+        curr_logpins = log["logpins"]
+        curr_logpins.append(pin)
+        log["logpins"] = curr_logpins
+        ret = []
+        location = DASHRlut[pin]
+        for path, subdirs, files in os.walk(location):
+            for name in files:
+                if name[-3:] == "BIN":
+                    filepath = pathlib.PurePath(path, name).as_posix()
+                    s = os.path.getmtime(filepath)
+                    reg = datetime.fromtimestamp(s).strftime('%m-%d-%Y')
+                    if reg in newPinDates[pin]:
+                        ret.append(read_file_data(filepath, pin, now))
+        count = 0
+        currNotes = []
+        for thing in ret:
+            if thing == 1:
+                count += 1
+            elif type(thing) == str:
+                currNotes.append(thing)
+        curr_lognotes = log["notes"]
+        curr_lognotes.append(currNotes)
+        log["notes"] = curr_lognotes
+        curr_num_files = log["numfiles"]
+        curr_num_files.append(count)
+        log["numfiles"] = curr_num_files
+    return log
+
 
 def read_file_data(filepath, pin, time_session):
     """Reads file and stores base64 data in database based on creation date.

@@ -5,7 +5,7 @@ from flask_cors import CORS
 import json
 import datetime
 from python_http_client import exceptions
-from DASHR import findSNs, compCrawl
+from DASHR import findSNs, compCrawl, dateOverview
 
 app = Flask(__name__)
 CORS(app)
@@ -37,11 +37,13 @@ def find_pins():
     :returns: JSON dictionary with array of pins
     """
     dict = findSNs(compCrawl())
+    dateData = dateOverview(dict)
     arr = []
     for SN in dict:
         arr.append(SN)
     print({"pins": arr})
-    return jsonify({"pins": arr}), 200
+    print({"dates": dateData})
+    return jsonify({"pins": arr, "dates": dateData}), 200
 
 
 @app.route('/api/dashr/upload', methods=['POST'])
@@ -56,6 +58,22 @@ def upload():
     from read_file import read_selected, narrow
     chosen = narrow(checked, DASHRlut)
     log = read_selected(chosen)
+    return jsonify(log), 200
+
+
+@app.route('/api/dashr/onlydates', methods=['POST'])
+def onlydates():
+    """POST route through which downloading of specific dates is triggered
+
+    :param pinDates: pin and corresponding dates selected by uder
+    :returns: log of arrays with pin, files downloaded count, and notes
+    """
+    DASHRlut = findSNs(compCrawl())
+    print(DASHRlut)
+    pinDates = request.get_json()
+    print(pinDates)
+    from read_file import downloadDates
+    log = downloadDates(pinDates, DASHRlut)
     return jsonify(log), 200
 
 

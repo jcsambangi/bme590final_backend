@@ -20,4 +20,4 @@ However, the server is built to communicate only with the front end, with user i
 * In the file, add the following code (square brackets indicate portions that should be replaced with user-specific information):
   * `mysql = {'host': [db host], 'user': [user], 'password': [password], 'db': [name of db]}`
 ## Spinning Up the Server
-The back end server can be spun up locally by calling `FLASK_APP = app.py flask run` while inside the root of the repository.
+The back end server can be spun up locally by calling `FLASK_APP=app.py flask run` while inside the root of the repository.
