@@ -1,12 +1,12 @@
 # bme590final_backend
 [![Build Status](https://travis-ci.org/jcsambangi/bme590final_backend.svg?branch=master)](https://travis-ci.org/jcsambangi/bme590final_backend)
-Back end functionality for the HIE sensor management tool. Front end can be found [here](https://github.com/jcsambangi/bme590final).
+Back end functionality for the HIE sensor management tool. Front end can be found [here](https://github.com/jcsambangi/bme590final).  
 v1.0.0 released 12/14/18 by Teresa Mao, Claire Niederriter, and Jaydeep Sambangi
 ## Overview
 This repository holds a Flask app that runs on `localhost:5000` which communicates with the React front end to service its RESTful API requests. It also communicated with a local MySQL database, configured as described below. This server supports the following routes:
 * GET `/`
 * GET `/api/dashr/find_pins`
-* POST `/api/dashr/upload`
+* POST `/api/dashr/upload`  
 However, the server is built to communicate only with the front end, with user input being controlled such that back end validation is unnecessary. Therefore, these routes should only be accessed through the above specified React front end. Before the software can be used at all, the below two steps should be carried out.
 ### Setting up the Database
 * Download [MySQL Community Edition](https://dev.mysql.com/downloads/windows/installer/8.0.html).
@@ -20,5 +20,4 @@ However, the server is built to communicate only with the front end, with user i
 * In the file, add the following code (square brackets indicate portions that should be replaced with user-specific information):
   * `mysql = {'host': [db host], 'user': [user], 'password': [password], 'db': [name of db]}`
 ### Spinning Up the Server
-The back end server can be spun up locally by calling `FLASK_APP=app.py flask run` while inside the root of the repository.
-
+The back end server can be spun up locally by calling `FLASK_APP = app.py flask run` while inside the root of the repository.
