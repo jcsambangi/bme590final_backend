@@ -131,7 +131,7 @@ latex_elements = {
 latex_documents = [
     (master_doc, 'HIESensorManagementTool.tex',
      'HIE Sensor Management Tool Documentation', 'Teresa Mao,
-      Claire Niederriter, Jaydeep Sambangi', 'manual'),
+     Claire Niederriter, Jaydeep Sambangi', 'manual'),
 ]
 
 
