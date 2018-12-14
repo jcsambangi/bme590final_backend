@@ -7,8 +7,10 @@ import pymysql
 import os
 import numpy
 import pathlib
-import config as config
-from datetime import datetime
+try:
+    import config as config
+except:
+    import testConfig as config
 
 
 connection = pymysql.connect(host=config.mysql['host'],
@@ -119,7 +121,8 @@ def read_file_data(filepath, pin, time_session):
             print(max_time)
             if max_time is None:
                 max_time = datetime.min
-            print(max_time)
+                print("set")
+                print(max_time)
     except Exception as e:
         print(str(e))
         return str(e)
@@ -133,8 +136,11 @@ def read_file_data(filepath, pin, time_session):
                                       create_datetime, time_session))
             else:
                 # data had previously been inserted into DB
-                print("time is less - don't save: " + datetime.strftime(
-                    create_datetime, "%Y-%m-%d %H:%M:%S"))
+                print("don't save")
+                print("create time: " + datetime.strftime(create_datetime,
+                      "%Y-%m-%d %H:%M:%S"))
+                print("max time: " + datetime.strftime(max_time,
+                      "%Y-%m-%d %H:%M:%S"))
                 return 0
             # Commit changes (insert) to DB
             connection.commit()

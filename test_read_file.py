@@ -6,71 +6,35 @@ import time
 DASHRlut = {9307: "E://", 435: "F://", 0000: "H://"}
 
 
-@pytest.fixture
-def mkfakeEdir(tmpdir_factory):
-    """Creates 1/2 temporary directories for unit testing-required files.
-    :param tmpdir_factory:
-    :returns: tmpdir object
-    """
-    fakeEdir = tmpdir_factory.mktemp('fakeE')
-    return fakeEdir
-
-
-@pytest.fixture
-def mktestfile(fakeEdir):
-    """Creates test file for unit testing in fakeEdir.
-    """
-    testFile = tmpdir.join('9307L0.BIN')
-    test9307Path = testFile.strpath
-    with open('9307L0.BIN', 'rb') as binaryFile:
-        hold = binaryFile.read(64)
-    with open(test9307Path, 'wb') as binaryFile:
-        binaryFile.write(hold)
-    return test9307Path
-
-
-@pytest.fixture
-def mkfakeFdir(tmpdir_factory):
-    """Creates 2/2 temporary directories for unit testing-required files.
-    :param tmpdir_factory:
-    :returns: tmpdir object
-    """
-    fakeFdir = tmpdir_factory.mktemp('fakeF')
-    return fakeFdir
-
-
-@pytest.fixture
-def mktestfile(fakeFdir):
-    """Creates test file for unit testing in fakeHdir.
-    """
-    testFile = tmpdir.join('435L0.BIN')
-    test435Path = testFile.strpath
-    with open('435L0.BIN', 'rb') as binaryFile:
-        hold = binaryFile.read(64)
-    with open(test435Path, 'wb') as binaryFile:
-        binaryFile.write(hold)
-    return test435Path
-
-
 def test_narrow():
-    assert narrow([9307, 435], DASHRlut) == {9307: "E://", 435: "F://"}
+    assert narrow([9307, 435], DASHRlut) == {9307: "E://", 435:"F://"}
 
 
-def test_read_selected():
-    read_selected({9307: "E://", 435:"F://"})
+def test_read_selected(mkfakeFdir):
+    log = {
+            "logpins": [435],
+            "numfiles": [1],
+            "notes": [[]]
+            }
+    assert log == read_selected({435: mkfakeFdir})
 
 
-def test_read_file():
-    f = open("./test.txt", "w")
-    f.write("HELLO WORLD")
-    f.close()
-    assert read_file_data("./test.txt", 1000,
+def test_read_DASHR(mkfakeEdir):
+    ret = [1]
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+    assert ret == read_DASHR(9307, mkfakeEdir, now)
+
+
+def test_read_file(testFile1, testFile2):
+    time.sleep(1)
+    with open(testFile1, "w") as f:
+        f.write("HELLO WORLD")
+    assert read_file_data(testFile1, 9307,
                           datetime.datetime.now()) == 1
-    assert read_file_data("./test.txt", 1000,
+    assert read_file_data(testFile1, 9307,
                           datetime.datetime.now()) == 0
     time.sleep(1)
-    f = open("./test.txt", "w")
-    f.write("HI HUMANS")
-    f.close()
-    assert read_file_data("./test.txt", 1000,
-                          datetime.datetime.now()) == 1
+    with open(testFile2, "w") as f:
+        f.write("HI HUMANS")
+        assert read_file_data(testFile2, 9307,
+                              datetime.datetime.now()) == 1

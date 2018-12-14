@@ -6,22 +6,34 @@ import numpy
 from pin_lookup import pin
 
 
-def findSNs():
-    """Finds serial numbers associated with DASHRs with data.
+def compCrawl():
+    """Finds local removable partitions.
 
-    :returns: list of serial numbers as strings
+    :returns: list of paths of removable partitions
     """
     allPartitions = psutil.disk_partitions()
     maybeDASHRpartitions = []
     for sdiskpart in allPartitions:
         if sdiskpart[3] == 'rw,removable':
             maybeDASHRpartitions.append(sdiskpart[1])
+    return maybeDASHRpartitions
+
+
+def findSNs():
+    """Finds serial numbers associated with DASHRs with data.
+
+    :returns: list of serial numbers as strings
+    """
+    maybeDASHRpartitions = compCrawl()
     DASHRlut = {}
     for possibleDASHR in maybeDASHRpartitions:
         hold = determineDASHRs(possibleDASHR)
         if hold is not False:
-            pin_num = pin(hold)
-            DASHRlut[pin_num] = possibleDASHR
+            try:
+                pin_num = pin(hold)
+                DASHRlut[pin_num] = possibleDASHR
+            except FileNotFoundError:
+                DASHRlut[int(hold)] = possibleDASHR
     print(DASHRlut)
     return DASHRlut
 
@@ -34,7 +46,7 @@ def determineDASHRs(maybeDASHRpartition):
     """
     for path, subdirs, files in os.walk(maybeDASHRpartition):
         for name in files:
-            if name == "L0.BIN":
+            if name[0] == "L" and name[-3:] == "BIN":
                 return readSN(pathlib.PurePath(path,name).as_posix())
     return False
 
@@ -46,4 +58,3 @@ def readSN(path):
     :returns SN: integer serial number
     """
     return numpy.fromfile(path, dtype="uint32")[104]
-

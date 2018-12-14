@@ -1,0 +1,188 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>read_file module &#8212; HIE Sensor Management Tool  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pin_lookup module" href="pin_lookup.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-read_file">
+<span id="read-file-module"></span><h1>read_file module<a class="headerlink" href="#module-read_file" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="read_file.main">
+<code class="descclassname">read_file.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#read_file.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="read_file.narrow">
+<code class="descclassname">read_file.</code><code class="descname">narrow</code><span class="sig-paren">(</span><em>checked</em>, <em>DASHRlut</em><span class="sig-paren">)</span><a class="headerlink" href="#read_file.narrow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dictionary mapping selected DASHRs to local drives.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>checked</strong> – array of integer pins</li>
+<li><strong>DASHRlut</strong> – dictionary mapping of all locally detected DASHRs</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary mapping only user-selected DASHRs</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="read_file.read_DASHR">
+<code class="descclassname">read_file.</code><code class="descname">read_DASHR</code><span class="sig-paren">(</span><em>pin</em>, <em>location</em>, <em>now</em><span class="sig-paren">)</span><a class="headerlink" href="#read_file.read_DASHR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads data fom a single DASHR.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pin</strong> – pin of chosen DASHR</li>
+<li><strong>location</strong> – drive path of chosen DASHR</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">array of timestamps of files read</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="read_file.read_file_data">
+<code class="descclassname">read_file.</code><code class="descname">read_file_data</code><span class="sig-paren">(</span><em>filepath</em>, <em>pin</em>, <em>time_session</em><span class="sig-paren">)</span><a class="headerlink" href="#read_file.read_file_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes file and pin
+Reads timestamp from metadata and data within
+encodes data to base64
+stores data to DB
+returns timestamp
+:param: file from os
+:return: timestamp of create_time</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="read_file.read_selected">
+<code class="descclassname">read_file.</code><code class="descname">read_selected</code><span class="sig-paren">(</span><em>chosen</em><span class="sig-paren">)</span><a class="headerlink" href="#read_file.read_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads data from all selected DASHRs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>chosen</strong> – dictionary mapping selected DASHRs to local drives</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">log as dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">HIE Sensor Management Tool</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="DASHR.html">DASHR module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">app module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pin_lookup.html">pin_lookup module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">read_file module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="pin_lookup.html" title="previous chapter">pin_lookup module</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Teresa Mao, Claire Niederriter, Jaydeep Sambangi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/read_file.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
