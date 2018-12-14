@@ -12,6 +12,11 @@ connection = pymysql.connect(host=config.mysql['host'],
 
 
 def pin(serial_num):
+    """Returns pin associated with input serial number in database
+
+    :param serial_num: int serial number
+    :returns: pin if available, FileNotFoundError otherwise
+    """
     q = "SELECT pin FROM serial_pin WHERE serial = {}".format(serial_num)
     try:
         with connection.cursor() as cursor:
@@ -20,4 +25,3 @@ def pin(serial_num):
             return result["pin"]
     except Exception as e:
         raise FileNotFoundError
-#    return "ok"

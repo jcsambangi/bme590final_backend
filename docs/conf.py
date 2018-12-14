@@ -129,9 +129,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'HIESensorManagementTool.tex',
-     'HIE Sensor Management Tool Documentation', 'Teresa Mao,
-     Claire Niederriter, Jaydeep Sambangi', 'manual'),
+    (master_doc, 'HIETool.tex', 'HIE Tool', 'tm232, cen17, js593', 'manual'),
 ]
 
 
