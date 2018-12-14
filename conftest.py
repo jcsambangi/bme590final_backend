@@ -3,7 +3,10 @@ import pytest
 
 @pytest.fixture
 def mktestEfile(tmpdir_factory):
-    """Creates test file for unit testing in fakeEdir.
+    """Creates test file for unit testing in tempEdir.
+
+    :param tmpdir_factory:
+    :returns: path of file for pin 9307 test
     """
     tempEdir = tmpdir_factory.mktemp('tempE')
     testFile = tempEdir.join('L9307L0.BIN')
@@ -17,9 +20,10 @@ def mktestEfile(tmpdir_factory):
 
 @pytest.fixture
 def mkfakeEdir(mktestEfile):
-    """Creates 1/2 temporary directories for unit testing-required files.
-    :param tmpdir_factory:
-    :returns: tmpdir object
+    """Returns 1/2 temporary directories for DASHR emulation.
+
+    :param mktestEfile: fixture of path from created file
+    :returns: path of parent directory E (9307)
     """
     tempEPath = mktestEfile[:-12]
     return tempEPath
@@ -27,12 +31,22 @@ def mkfakeEdir(mktestEfile):
 
 @pytest.fixture
 def mktestdir(tmpdir_factory):
+    """Creates temporary directory for text files during testing.
+
+    :param tmpdir_factory:
+    :returns: directory fixture
+    """
     testdir = tmpdir_factory.mktemp('testing')
     return testdir
 
 
 @pytest.fixture
 def testFile1(mktestdir):
+    """Creates empty text file 1/2 for testing.
+
+    :param mktestdir: directory fixture
+    :returns: path of text file for file reading test
+    """
     testFile = mktestdir.join('testFile1.txt')
     testFile1Path = testFile.strpath
     return testFile1Path
@@ -40,6 +54,11 @@ def testFile1(mktestdir):
 
 @pytest.fixture
 def testFile2(mktestdir):
+    """Creates empty text file 2/2 for testing.
+
+    :param mktestdir: directory fixture
+    :returns: path of text file for file reading test
+    """
     testFile = mktestdir.join('testFile2.txt')
     testFile2Path = testFile.strpath
     return testFile2Path
@@ -47,7 +66,10 @@ def testFile2(mktestdir):
 
 @pytest.fixture
 def mktestFfile(tmpdir_factory):
-    """Creates test file for unit testing in fakeHdir.
+    """Creates test file for unit testing in tempFdir.
+
+    :param tmpdir_factory:
+    :returns: path of file for pin 435 test
     """
     tempFdir = tmpdir_factory.mktemp('tempF')
     testFile = tempFdir.join('L435L0.BIN')
@@ -61,9 +83,10 @@ def mktestFfile(tmpdir_factory):
 
 @pytest.fixture
 def mkfakeFdir(mktestFfile):
-    """Creates 2/2 temporary directories for unit testing-required files.
-    :param tmpdir_factory:
-    :returns: tmpdir object
+    """Returns 2/2 temporary directories for DASHR emulation.
+
+    :param mktestFfile: fixture of path from created file
+    :returns: path of parent directory F (435)
     """
     tempFPath = mktestFfile[:-11]
     return tempFPath

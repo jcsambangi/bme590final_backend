@@ -36,11 +36,6 @@
   <div class="section" id="module-read_file">
 <span id="read-file-module"></span><h1>read_file module<a class="headerlink" href="#module-read_file" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="read_file.main">
-<code class="descclassname">read_file.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#read_file.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="read_file.narrow">
 <code class="descclassname">read_file.</code><code class="descname">narrow</code><span class="sig-paren">(</span><em>checked</em>, <em>DASHRlut</em><span class="sig-paren">)</span><a class="headerlink" href="#read_file.narrow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns dictionary mapping selected DASHRs to local drives.</p>
@@ -75,7 +70,7 @@
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">array of timestamps of files read</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">array of binaries describing whether each file was read</p>
 </td>
 </tr>
 </tbody>
@@ -85,13 +80,24 @@
 <dl class="function">
 <dt id="read_file.read_file_data">
 <code class="descclassname">read_file.</code><code class="descname">read_file_data</code><span class="sig-paren">(</span><em>filepath</em>, <em>pin</em>, <em>time_session</em><span class="sig-paren">)</span><a class="headerlink" href="#read_file.read_file_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes file and pin
-Reads timestamp from metadata and data within
-encodes data to base64
-stores data to DB
-returns timestamp
-:param: file from os
-:return: timestamp of create_time</p>
+<dd><p>Reads file and stores data in database based on creation date.
+Encodes data to base64 before storing. Returns 0, 1, or a note.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> – path on local machine where file can be found</li>
+<li><strong>pin</strong> – DASHR from which data is being read</li>
+<li><strong>time_session</strong> – datetime of the session - ie when files are harvested</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">1 if saved, 0 if not, str(error) if error</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">

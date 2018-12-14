@@ -1,5 +1,10 @@
 import pytest
-from DASHR import determineDASHRs, readSN
+from DASHR import findSNs, determineDASHRs, readSN
+
+
+def test_findSNs(mkfakeEdir, mkfakeFdir):
+    LUT = {9307: mkfakeEdir, 435: mkfakeFdir}
+    assert findSNs([mkfakeEdir, mkfakeFdir]) == LUT
 
 
 def test_determineDASHRs(mkfakeEdir):

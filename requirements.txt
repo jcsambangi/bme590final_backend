@@ -4,4 +4,6 @@ pathlib
 psutil
 numpy
 pytest
+pytest-pep8
+pytest-cov
 flask-cors

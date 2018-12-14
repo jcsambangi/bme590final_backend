@@ -10,7 +10,7 @@ import pathlib
 try:
     import config as config
 except:
-    import testConfig as config
+    import fakeConfig as config
 
 
 connection = pymysql.connect(host=config.mysql['host'],
@@ -19,12 +19,6 @@ connection = pymysql.connect(host=config.mysql['host'],
                              db=config.mysql['db'],
                              cursorclass=pymysql.cursors.DictCursor)
 
-
-def main():
-    # read_file_data("..\..\..\Downloads\L0.BIN", 9037)
-    read_file_data("test.txt", 9307, datetime.now())
-    # read_numpy("..\..\..\Downloads\L0.BIN")
-    
 
 def narrow(checked, DASHRlut):
     """Returns dictionary mapping selected DASHRs to local drives.
@@ -70,7 +64,6 @@ def read_selected(chosen):
         curr_num_files = log["numfiles"]
         curr_num_files.append(count)
         log["numfiles"] = curr_num_files
-    print(log)
     return log
 
 
@@ -79,7 +72,7 @@ def read_DASHR(pin, location, now):
 
     :param pin: pin of chosen DASHR
     :param location: drive path of chosen DASHR
-    :returns: array of timestamps of files read
+    :returns: array of binaries describing whether each file was read
     """
     ret = []
     for path, subdirs, files in os.walk(location):
@@ -87,20 +80,15 @@ def read_DASHR(pin, location, now):
             if name[-3:] == "BIN":
                 filepath = pathlib.PurePath(path, name).as_posix()
                 ret.append(read_file_data(filepath, pin, now))
-    print(ret)
     return ret
 
 
 def read_file_data(filepath, pin, time_session):
-    """
-    Takes file and pin
-    Reads timestamp from metadata and data within
-    encodes data to base64
-    stores data to DB
-    returns timestamp
-    :param filepath: from os
-    :param pin: number corresponding to file
-    :param time_session: datetime of the session - ie when it files are harvested
+    """Reads file and stores base64 data in database based on creation date.
+
+    :param filepath: path on local machine where file can be found
+    :param pin: DASHR from which data is being read
+    :param time_session: datetime of the session - ie when files are harvested
     :return: 1 if saved, 0 if not, str(error) if error
     """
     create_time = time.gmtime(os.path.getmtime(filepath))
@@ -113,29 +101,25 @@ def read_file_data(filepath, pin, time_session):
     # Save to DB
     try:
         with connection.cursor() as cursor:
-            print("CONNECTED TO DB")
             cursor.execute("SELECT MAX(dashr_create_time) FROM "
                            "dashr WHERE pin = {}"
                            .format(pin))
             max_time = cursor.fetchone()["MAX(dashr_create_time)"]
-            print(max_time)
             if max_time is None:
                 max_time = datetime.min
-                print("set")
-                print(max_time)
     except Exception as e:
         print(str(e))
         return str(e)
     try:
         with connection.cursor() as cursor:
             if create_datetime > max_time:
-                # ASSUMING clocks don't reset and/or go backwards
+                # Assuming DASHR RTCs don't reset and/or go backwards
                 print("time is greater - save data to db")
-                cursor.execute("INSERT INTO dashr VALUES ({}, '{}', '{}', '{}')".
+                cursor.execute("INSERT INTO dashr VALUES ({},'{}','{}','{}')".
                                format(pin, b64data.decode("utf-8"),
                                       create_datetime, time_session))
             else:
-                # data had previously been inserted into DB
+                # if data past this time has previously been inserted into DB
                 print("don't save")
                 print("create time: " + datetime.strftime(create_datetime,
                       "%Y-%m-%d %H:%M:%S"))
@@ -150,15 +134,7 @@ def read_file_data(filepath, pin, time_session):
         return str(e)
 
 
-# def read_numpy(path):
-#     data_arr = numpy.fromfile(path, dtype="uint8")
-#     # print(data_arr[100])
-#     for i in range(0, 700):
-#         print(data_arr[i], end=" ")
-#     print(len(data_arr))
-#     return ""
-
-
+# Possible future features:
 # DECODING:
     # decoded = base64.b64decode(b64data)
     # decoded = base64.decodebytes(decoded64)

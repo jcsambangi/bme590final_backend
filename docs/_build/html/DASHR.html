@@ -39,7 +39,7 @@
 <dl class="function">
 <dt id="DASHR.compCrawl">
 <code class="descclassname">DASHR.</code><code class="descname">compCrawl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DASHR.compCrawl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds local removable partitions.</p>
+<dd><p>Finds local removable partitions. No associated unit test.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -60,7 +60,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>maybeDASHRpartition</strong> – paths of all local removable drives</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">serial number as int if partition has L0.BIN, False otherwise</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int serial number if partition starts with L and ends with BIN</td>
 </tr>
 </tbody>
 </table>
@@ -68,13 +68,15 @@
 
 <dl class="function">
 <dt id="DASHR.findSNs">
-<code class="descclassname">DASHR.</code><code class="descname">findSNs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DASHR.findSNs" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">DASHR.</code><code class="descname">findSNs</code><span class="sig-paren">(</span><em>maybeDASHRpartitions</em><span class="sig-paren">)</span><a class="headerlink" href="#DASHR.findSNs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds serial numbers associated with DASHRs with data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of serial numbers as strings</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>maybeDASHRpartitions</strong> – array of partitions that may be DASHRs</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of serial numbers or PINs as strings</td>
 </tr>
 </tbody>
 </table>
@@ -83,12 +85,12 @@
 <dl class="function">
 <dt id="DASHR.readSN">
 <code class="descclassname">DASHR.</code><code class="descname">readSN</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#DASHR.readSN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads serial number from L0.BIN.</p>
+<dd><p>Reads serial number from .BIN file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – string path of particular L0.BIN file</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – string path of particular .BIN file</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns SN:</th><td class="field-body">integer serial number</td>
 </tr>
